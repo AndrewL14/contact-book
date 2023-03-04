@@ -24,6 +24,8 @@ public class UpdateContactRequest {
     public UpdateContactRequest(Builder builder) {
         this.newFirstName = builder.newFirstName;
         this.newLastName = builder.newLastName;
+        this.oldFirstName = builder.oldFirstName;
+        this.oldLastName = builder.oldLastName;
         this.phoneNumber = builder.phoneNumber;
         this.email = builder.email;
     }
@@ -60,16 +62,16 @@ public class UpdateContactRequest {
         this.oldLastName = oldLastName;
     }
 
-    public Optional<String> getPhoneNumber() {
-        return Optional.ofNullable(phoneNumber);
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public Optional<String> getEmail() {
-        return Optional.ofNullable(email);
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {

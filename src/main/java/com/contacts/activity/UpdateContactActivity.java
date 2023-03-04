@@ -18,17 +18,18 @@ public class UpdateContactActivity {
     }
 
     public UpdateContactResponse execute(UpdateContactRequest request) {
-        Contact contact = contactDao.getContact(request.getOldFirstName(), request.getOldLastName());
+        contactDao.deleteContact(request.getOldFirstName() , request.getOldLastName());
         //TODO create Exception
-        contact.setFirstName(request.getNewFirstName().orElse(contact.getFirstName()));
-        contact.setLastName(request.getNewLastName().orElse(contact.getFirstName()));
-        contact.setPhoneNumber(request.getPhoneNumber().orElse(contact.getPhoneNumber()));
-        contact.setEmail(request.getEmail().orElse(contact.getEmail()));
+        Contact newContact = new Contact();
 
-        contactDao.saveContact(contact);
+        newContact.setFirstName(request.getNewFirstName().orElse(request.getOldFirstName()));
+        newContact.setLastName(request.getNewLastName().orElse(request.getOldLastName()));
+        newContact.setPhoneNumber(request.getPhoneNumber());
+        newContact.setEmail(request.getEmail());
+        contactDao.saveContact(newContact);
 
         return new UpdateContactResponse.Builder()
-                .withContactModel(ModelConverter.toContactModel(contact))
+                .withContactModel(ModelConverter.toContactModel(newContact))
                 .build();
     }
 }

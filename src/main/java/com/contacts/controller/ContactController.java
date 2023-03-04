@@ -26,7 +26,7 @@ public class ContactController {
         return new ResponseEntity<>(contactActivity.execute(request), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/update/contact", produces = {"application/json"})
+    @PutMapping(value = "/update/contact", produces = {"application/json"})
     public ResponseEntity<?> UpdateContactProvider(@RequestParam String newFirstName, String newLastName, String oldFirstName,
                                         String oldLastName, String phoneNumber, String email) {
         UpdateContactActivity contactActivity = component.provideUpdateContactActivity();
@@ -38,6 +38,7 @@ public class ContactController {
                 .withPhoneNumber(phoneNumber)
                 .withEmail(email)
                 .build();
+
         return new ResponseEntity<>(contactActivity.execute(request), HttpStatus.OK);
     }
 

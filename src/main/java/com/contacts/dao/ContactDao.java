@@ -32,10 +32,12 @@ public class ContactDao {
     }
 
     public void deleteContact(String firstName, String lastName) {
-        Contact contact = new Contact();
-        contact.setFirstName(firstName);
-        contact.setLastName(lastName);
+        Contact contact = getContact(firstName, lastName);
         mapper.delete(contact);
+//        Contact contact = new Contact();
+//        contact.setFirstName(firstName);
+//        contact.setLastName(lastName);
+//        mapper.delete(contact);
     }
 
     public SortedMap<String, Contact> getAllContacts() {
