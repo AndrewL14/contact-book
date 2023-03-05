@@ -51,7 +51,7 @@ public class ContactController {
                 .build();
         return new ResponseEntity<>(contactsActivity.execute(request) , HttpStatus.OK);
     }
-    
+
     @GetMapping(value = "/get/contact", produces = {"application/json"})
     public ResponseEntity<?> getContact(@RequestParam  String firstName, String lastName) {
         GetContactActivity contactActivity = component.provideGetContactActivity();
