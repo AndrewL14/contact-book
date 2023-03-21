@@ -12,12 +12,12 @@ public class ContactValidator {
     public static boolean isValidEmail(String email) {
         Pattern pattern = Pattern.compile(EMAIL_REGEX, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+        return !matcher.matches();
     }
 
     public static boolean isValidPhoneNumber(String phoneNumber) {
         Pattern pattern = Pattern.compile(PHONE_NUMBER_REGEX);
         Matcher matcher = pattern.matcher(phoneNumber);
-        return matcher.matches();
+        return !matcher.matches();
     }
 }

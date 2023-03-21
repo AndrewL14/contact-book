@@ -2,7 +2,9 @@ package com.contacts.controller;
 
 import com.contacts.ContactBookApplication;
 import com.contacts.activity.*;
+import com.contacts.activity.validator.ContactValidator;
 import com.contacts.dependency.ServiceComponent;
+import com.contacts.exception.InvalidContactFormatException;
 import com.contacts.model.requests.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,13 @@ public class ContactController {
 
     @PutMapping(value="/add/contact", produces = {"application/json"})
     public ResponseEntity<?> addContactProvider(@RequestParam String firstName, String lastName,
-                                      String phoneNumber, String email) {
+                                      String phoneNumber, String email) throws InvalidContactFormatException {
+        if (ContactValidator.isValidPhoneNumber(phoneNumber)) {
+            throw new InvalidContactFormatException("Invalid phone number format: " + phoneNumber);
+        }
+        if (ContactValidator.isValidEmail(email)) {
+            throw new InvalidContactFormatException("Invalid email format: " + email);
+        }
         AddContactActivity contactActivity = component.provideAddContactActivity();
         AddContactRequest request = AddContactRequest.builder()
                 .withFirstName(firstName)
@@ -28,7 +36,13 @@ public class ContactController {
 
     @PutMapping(value = "/update/contact", produces = {"application/json"})
     public ResponseEntity<?> UpdateContactProvider(@RequestParam String newFirstName, String newLastName, String oldFirstName,
-                                        String oldLastName, String phoneNumber, String email) {
+                                        String oldLastName, String phoneNumber, String email) throws InvalidContactFormatException {
+        if (ContactValidator.isValidPhoneNumber(phoneNumber)) {
+            throw new InvalidContactFormatException("Invalid phone number format: " + phoneNumber);
+        }
+        if (ContactValidator.isValidEmail(email)) {
+            throw new InvalidContactFormatException("Invalid email format: " + email);
+        }
         UpdateContactActivity contactActivity = component.provideUpdateContactActivity();
         UpdateContactRequest request = UpdateContactRequest.builder()
                 .withNewFirstName(newFirstName)

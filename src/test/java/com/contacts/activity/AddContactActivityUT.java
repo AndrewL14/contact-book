@@ -1,6 +1,7 @@
 package com.contacts.activity;
 
 import com.contacts.dao.ContactDao;
+import com.contacts.exception.InvalidContactFormatException;
 import com.contacts.model.Contact;
 import com.contacts.model.requests.AddContactRequest;
 import com.contacts.model.responses.AddContactResponse;
@@ -32,7 +33,7 @@ public class AddContactActivityUT {
     }
 
     @Test
-    public void execute_addBook_returnsContact() {
+    public void execute_addBook_returnsContact() throws InvalidContactFormatException {
         // GIVEN
         AddContactRequest request = AddContactRequest
                 .builder()
