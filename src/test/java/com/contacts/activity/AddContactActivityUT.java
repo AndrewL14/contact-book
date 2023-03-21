@@ -33,7 +33,7 @@ public class AddContactActivityUT {
     }
 
     @Test
-    public void execute_addBook_returnsContact() throws InvalidContactFormatException {
+    public void execute_addContact_returnsContact() throws InvalidContactFormatException {
         // GIVEN
         AddContactRequest request = AddContactRequest
                 .builder()
