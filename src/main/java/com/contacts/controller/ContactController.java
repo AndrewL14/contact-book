@@ -6,52 +6,38 @@ import com.contacts.activity.validator.ContactValidator;
 import com.contacts.dependency.ServiceComponent;
 import com.contacts.exception.InvalidContactFormatException;
 import com.contacts.model.requests.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ContactController {
+    @Autowired
     private static final ServiceComponent component = ContactBookApplication.component;
 
     @PutMapping(value="/add/contact", produces = {"application/json"})
-    public ResponseEntity<?> addContactProvider(@RequestParam String firstName, String lastName,
-                                      String phoneNumber, String email) throws InvalidContactFormatException {
-        if (ContactValidator.isValidPhoneNumber(phoneNumber)) {
-            throw new InvalidContactFormatException("Invalid phone number format: " + phoneNumber);
+    public ResponseEntity<?> addContactProvider(@RequestBody AddContactRequest request) throws InvalidContactFormatException {
+        if (ContactValidator.isValidPhoneNumber(request.getPhoneNumber())) {
+            throw new InvalidContactFormatException("Invalid phone number format: " + request.getPhoneNumber());
         }
-        if (ContactValidator.isValidEmail(email)) {
-            throw new InvalidContactFormatException("Invalid email format: " + email);
+        if (ContactValidator.isValidEmail(request.getEmail())) {
+            throw new InvalidContactFormatException("Invalid email format: " + request.getEmail());
         }
         AddContactActivity contactActivity = component.provideAddContactActivity();
-        AddContactRequest request = AddContactRequest.builder()
-                .withFirstName(firstName)
-                .withLastName(lastName)
-                .withPhoneNumber(phoneNumber)
-                .withEmail(email)
-                .build();
 
         return new ResponseEntity<>(contactActivity.execute(request), HttpStatus.OK);
     }
 
     @PutMapping(value = "/update/contact", produces = {"application/json"})
-    public ResponseEntity<?> UpdateContactProvider(@RequestParam String newFirstName, String newLastName, String oldFirstName,
-                                        String oldLastName, String phoneNumber, String email) throws InvalidContactFormatException {
-        if (ContactValidator.isValidPhoneNumber(phoneNumber)) {
-            throw new InvalidContactFormatException("Invalid phone number format: " + phoneNumber);
+    public ResponseEntity<?> UpdateContactProvider(@RequestBody UpdateContactRequest request) throws InvalidContactFormatException {
+        if (ContactValidator.isValidPhoneNumber(request.getPhoneNumber())) {
+            throw new InvalidContactFormatException("Invalid phone number format: " + request.getPhoneNumber());
         }
-        if (ContactValidator.isValidEmail(email)) {
-            throw new InvalidContactFormatException("Invalid email format: " + email);
+        if (ContactValidator.isValidEmail(request.getEmail())) {
+            throw new InvalidContactFormatException("Invalid email format: " + request.getEmail());
         }
         UpdateContactActivity contactActivity = component.provideUpdateContactActivity();
-        UpdateContactRequest request = UpdateContactRequest.builder()
-                .withNewFirstName(newFirstName)
-                .withNewLastName(newLastName)
-                .withOldFirstName(oldFirstName)
-                .withOldLastName(oldLastName)
-                .withPhoneNumber(phoneNumber)
-                .withEmail(email)
-                .build();
 
         return new ResponseEntity<>(contactActivity.execute(request), HttpStatus.OK);
     }
@@ -67,12 +53,9 @@ public class ContactController {
     }
 
     @GetMapping(value = "/get/contact", produces = {"application/json"})
-    public ResponseEntity<?> getContact(@RequestParam  String firstName, String lastName) {
+    public ResponseEntity<?> getContact(@RequestBody GetContactRequest request) {
         GetContactActivity contactActivity = component.provideGetContactActivity();
-        GetContactRequest request = GetContactRequest.builder()
-                .withFirstName(firstName)
-                .withLastname(lastName)
-                .build();
+
         return new ResponseEntity<>(contactActivity.execute(request), HttpStatus.OK);
     }
 
