@@ -1,10 +1,13 @@
 package com.contacts.activity;
 
+import com.contacts.activity.validator.ContactValidator;
 import com.contacts.converter.ModelConverter;
 import com.contacts.dao.ContactDao;
+import com.contacts.exception.InvalidContactFormatException;
 import com.contacts.model.Contact;
 import com.contacts.model.requests.AddContactRequest;
 import com.contacts.model.responses.AddContactResponse;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import javax.inject.Inject;
 
