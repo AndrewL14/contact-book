@@ -1,5 +1,6 @@
 package com.contacts.activity;
 
+import com.contacts.activity.AddContactActivity;
 import com.contacts.dao.ContactDao;
 import com.contacts.exception.InvalidContactFormatException;
 import com.contacts.model.Contact;
