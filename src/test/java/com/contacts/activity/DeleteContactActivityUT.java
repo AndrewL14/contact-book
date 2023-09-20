@@ -1,5 +1,6 @@
 package com.contacts.activity;
 
+import com.contacts.activity.DeleteContactActivity;
 import com.contacts.dao.ContactDao;
 import com.contacts.model.requests.DeleteContactRequest;
 import com.contacts.model.responses.DeleteContactResponse;
